@@ -1,12 +1,22 @@
-import random
+import requests
 
-class MockWeatherAPI:
+class WeatherAPI:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.base_url = "http://api.openweathermap.org/data/2.5/weather"
+
     def get_weather(self, city):
-        # Simulate a weather API with random weather data
-        weather_data = {
-            "Sunny": "Sunny, 25°C",
-            "Rainy": "Rainy, 18°C",
-            "Cloudy": "Cloudy, 22°C",
-            "Stormy": "Stormy, 15°C"
+        # Call the OpenWeatherMap API to get the current weather for a city
+        params = {
+            "q": city,
+            "appid": self.api_key,
+            "units": "metric"  # To get the temperature in Celsius
         }
-        return weather_data.get(random.choice(list(weather_data.keys())), None)
+        response = requests.get(self.base_url, params=params)
+        if response.status_code == 200:
+            data = response.json()
+            weather_desc = data['weather'][0]['description']
+            temperature = data['main']['temp']
+            return f"{weather_desc.capitalize()}, {temperature}°C"
+        else:
+            return None
