@@ -16,7 +16,7 @@ chatbot_project/
 ## Setup Instructions
 
 ### 1. Clone the repository
-    git clone <your_repository_url> cd chatbot_project
+    git clone https://github.com/raghavendra-24/chatbot_project cd chatbot_project
 
 
 ### 2. Run the Chatbot
