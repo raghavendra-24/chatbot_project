@@ -34,12 +34,20 @@ class Chatbot:
             print("Sorry, I couldn’t find the weather for that city.")
             self.log_conversation(f"Unknown city for weather query: {city}")
 
-    def handle_math_operations(self):
-        # Perform a chosen math operation and handle any invalid inputs
+    def handle_math_operations(self, operation=None, num1=None, num2=None):
+        if operation is None or num1 is None or num2 is None:
+            # Interactive mode for user input
+            try:
+                operation = input("Choose an operation (add, subtract, multiply, divide): ").strip().lower()
+                num1 = float(input("Enter the first number: "))
+                num2 = float(input("Enter the second number: "))
+            except ValueError:
+                print("Invalid input. Please enter numerical values.")
+                self.log_conversation("Invalid input for math operation.")
+                return "Error"
+
+        # Processing the math operation
         try:
-            operation = input("Choose an operation (add, subtract, multiply, divide): ").strip().lower()
-            num1 = float(input("Enter the first number: "))
-            num2 = float(input("Enter the second number: "))
             if operation == "add":
                 result = num1 + num2
             elif operation == "subtract":
@@ -49,16 +57,18 @@ class Chatbot:
             elif operation == "divide":
                 if num2 == 0:
                     print("Error: Cannot divide by zero!")
-                    return
+                    return "Error"
                 result = num1 / num2
             else:
                 print("Invalid operation!")
-                return
+                return "Invalid operation"
+            
             print(f"The result is: {result}")
             self.log_conversation(f"Math operation '{operation}' on {num1} and {num2}: {result}")
-        except ValueError:
-            print("Invalid input. Please enter numerical values.")
-            self.log_conversation("Invalid input for math operation.")
+            return result  # Return the result for test verification
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+            return "Error"
 
     def start(self):
         # Start the chatbot interaction loop
