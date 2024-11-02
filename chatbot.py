@@ -1,16 +1,15 @@
 import datetime
-import random
-from weather_api import MockWeatherAPI
+from weather_api import WeatherAPI
 
 class Chatbot:
-    def __init__(self, name="Chatbot"):
+    def __init__(self, name="Chatbot", api_key="your_api_key_here"):
         # Initialize chatbot with a default name and logging file
         self.name = name
         self.user_name = None
-        self.weather_api = MockWeatherAPI()
+        self.weather_api = WeatherAPI(api_key)
         self.log_file = "conversation.log"
         self.log_conversation(f"Chatbot '{self.name}' started.")
-
+    
     def log_conversation(self, message):
         # Logs a message to the conversation log with a timestamp
         with open(self.log_file, "a") as log:
@@ -24,7 +23,7 @@ class Chatbot:
         print(f"Nice to meet you, {self.user_name}!")
 
     def handle_weather_query(self):
-        # Handles weather queries using the mock API
+        # Handles weather queries using the real API
         city = input("Please enter the city name: ")
         weather_info = self.weather_api.get_weather(city)
         if weather_info:
@@ -91,5 +90,5 @@ class Chatbot:
                 print("Invalid choice, please try again.")
 
 if __name__ == "__main__":
-    chatbot = Chatbot()
+    chatbot = Chatbot(api_key="66c02b74f5020224d5fcec50c437057b")
     chatbot.start()
