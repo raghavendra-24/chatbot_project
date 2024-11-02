@@ -1,8 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify 
 from chatbot import Chatbot
 
 app = Flask(__name__)
 chatbot = Chatbot()
+
+@app.route("/", methods=["GET"])
+def index():
+    return jsonify({"message": "Welcome to the Chatbot API! Use /greet, /weather, or /math."})
 
 @app.route("/greet", methods=["GET"])
 def greet():
