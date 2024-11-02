@@ -1,0 +1,8 @@
+chatbot_project/
+├── chatbot.py            # Core chatbot implementation
+├── weather_api.py        # Mock weather API
+├── tests/
+│   └── test_chatbot.py   # Unit tests
+├── conversation.log      # Log file for conversations
+├── README.md             # Setup instructions
+└── app.py                # Optional REST API (bonus challenge)
