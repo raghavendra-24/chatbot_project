@@ -1,3 +1,4 @@
+from unittest.mock import patch
 import unittest
 from chatbot import Chatbot
 
@@ -5,10 +6,17 @@ class TestChatbot(unittest.TestCase):
     def setUp(self):
         self.chatbot = Chatbot()
 
-    def test_weather_query(self):
-        # Test that the weather response is non-empty for valid inputs
+    @patch("weather_api.WeatherAPI.get_weather")
+    def test_weather_query(self, mock_get_weather):
+        # Mock the weather API response
+        mock_get_weather.return_value = "Clear sky, 20°C"
+        
+        # Now calling the method should return the mocked response
         weather = self.chatbot.weather_api.get_weather("London")
+        
+        # Test that the mocked response is as expected
         self.assertTrue(weather is not None)
+        self.assertEqual(weather, "Clear sky, 20°C")
 
     def test_math_operations(self):
         # Test addition functionality
